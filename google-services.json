@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "825732396553",
+    "project_id": "cheerland-devistorm",
+    "storage_bucket": "cheerland-devistorm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825732396553:android:0dd9b5bea857643effaad8",
+        "android_client_info": {
+          "package_name": "com.devistorm.cheerland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825732396553-ms2pvn9d34k2fu9sm61nod7s45phjfio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaZVEN-GFjk_kgQ017zKDmk5smOLl5Bfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825732396553-ms2pvn9d34k2fu9sm61nod7s45phjfio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

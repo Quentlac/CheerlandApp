@@ -1,21 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import MainComponent from "./Components/MainComponent";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import {Provider} from "react-redux";
+import Store from "./Store/configureStore";
+import * as Notifications from "expo-notifications";
+
+
+export default class App extends React.Component {
+
+    render() {
+        return (
+            <Provider store={Store}>
+                <NavigationContainer>
+                    <View style={{flex: 1, overflow: "hidden"}}>
+                        <MainComponent></MainComponent>
+                    </View>
+                </NavigationContainer>
+            </Provider>
+        );
+    }
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+

@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#993366"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,16 +17,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.devistorm.cheerland"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.devistorm.cheerland",
+      "versionCode": 13,
+      "permissions": ["VIBRATE"],
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3778298952636594~6047036665"
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon-app.png",
+          "color": "#ffffff"
+        }
+      ]
+    ]
   }
 }

@@ -206,7 +206,9 @@ class Register extends React.Component {
                 <Text style={LoginStyles.error}>{(this.state.correct) ? null : this.state.error}</Text>
 
                 <TouchableOpacity onPress={() => this._nextStep()} style={[MainTheme.action_button, LoginStyles.submit_button]}><Text style={MainTheme.action_button_text}>Suivant</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={LoginStyles.link}>Déjà inscris ? Connectez vous !</Text></TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Login")}
+                ><Text style={LoginStyles.link}>Déjà inscris ?</Text></TouchableOpacity>
             </View>
         );
     }

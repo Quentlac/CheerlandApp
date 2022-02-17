@@ -13,7 +13,7 @@ class Cheers extends React.Component {
         this.state = {
             width: 0,
             height: 0,
-            size: 1//new Animated.Value(0)
+            size: 1,//new Animated.Value(0)
         }
     }
 
@@ -40,6 +40,9 @@ class Cheers extends React.Component {
                     }
                     {(this.props.user.certif == true) ?
                     <Image style={CheerStyles.certif} source={require("../assets/UI/certif-icon.png")} /> : null}
+
+                    {(this.props.user.certif == false && this.props.user.special_badge == true) ?
+                    <Image style={CheerStyles.certif} source={require("../assets/UI/special-badge.png")} /> : null}
 
                 </View>
 

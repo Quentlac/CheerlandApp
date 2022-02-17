@@ -49,12 +49,12 @@ class Map extends React.Component{
                     //Les 3 props suivantes permettent de récupérer les events sur le cheers (lorsque l'utilisateur déplace la map)
                     onTouchStart={(e) => {
                         this._moveMapStart(e);
-                        this.cheer_move = false;
+                        //this.cheer_move = false;
                     }}
                     onTouchEnd={this._refreshAllCheers}
                     onTouchMove={(e) => {
                         this._moveMap(e);
-                        this.cheer_move = true;
+                        //this.cheer_move = true;
                     }}
 
                     onLayout={this._getCheerSize}
@@ -101,7 +101,7 @@ class Map extends React.Component{
                             posY: cheer.position[1],
                             content: cheer.content,
                             type: cheer.type,
-                            user: {name: cheer.username, certif: cheer.certif},
+                            user: {name: cheer.username, certif: cheer.certif, special_badge: cheer.special_badge},
                             color: cheer.color,
                             path: cheer.path,
                             animated: anim
@@ -169,15 +169,16 @@ class Map extends React.Component{
         //this.cheerSize = [];
     }
 
-    _backToHome(){
-        this.setState({loading: true, path: 'R', position: [0, 0], path_historic: []}, () => {
+    _backToHome(x = 0, y = 0){
+        console.log("RootPosition: " + this.rootPosition);
+        this.setState({loading: true, path: 'R', position: [x, y], path_historic: []}, () => {
             this._refreshAllCheers().then(() => this.setState({loading: false}));
         });
 
     }
 
     _infinityDiscover = (nav) => {
-        if(nav){
+        if(nav && !this.state.loading){
             if(this.state.path == 'R'){
                 getNextGoodCheer(this.props.worldname).then((result) => {
                     this.setState({loading: true, path: 'R', path_historic: []}, () =>
@@ -193,7 +194,7 @@ class Map extends React.Component{
                     });
                 }).catch((error) => alert(error));
             }
-            else this._backToHome();
+            else this._backToHome(this.rootPosition[0], this.rootPosition[1]);
         }
     }
 
@@ -203,17 +204,24 @@ class Map extends React.Component{
         let dX = this.state.oldPosition[0] - event.nativeEvent.pageX;
         let dY = this.state.oldPosition[1] - event.nativeEvent.pageY;
 
-        //Si on bouge on anule l'évenement de pression longue
-        if(Math.abs(dX) > 3 || Math.abs(dY) > 3)
-            clearTimeout(this.longPressTimeout);
-
         this.setState({
             position: [this.state.position[0] + dX, this.state.position[1] + dY],
             oldPosition: [event.nativeEvent.pageX, event.nativeEvent.pageY]
         });
+
+        if(dX > 5 || dY > 5) {
+            this.cheer_move = true;
+        }
+
+        if(this.state.path === 'R') {
+           this.rootPosition = [this.state.position[0], this.state.position[1]];
+        }
     }
 
     _moveMapStart = (event) => {
+
+        this.cheer_move = false;
+
         this.setState({
             moveStart: [event.nativeEvent.pageX, event.nativeEvent.pageY],
             oldPosition: [event.nativeEvent.pageX, event.nativeEvent.pageY]
@@ -257,6 +265,9 @@ class Map extends React.Component{
         this.token = null; // Token d'accès
         this.cheer_move = false;
 
+        this.rootPosition = [0, 0]; // Position sur le path R pour éviter de tout le temps retourner au centre
+
+
         this.state = {
             moveStart: [0, 0],
             position: [Dimensions.get('window').width / 2, Dimensions.get('window').height / 2],
@@ -268,6 +279,7 @@ class Map extends React.Component{
             loading: false,
             notifications: false,
             notifs_data: null,
+            zoom: 1
         }
     }
 
@@ -276,6 +288,7 @@ class Map extends React.Component{
         return (
             <View style={{ flex: 1 }}>
 
+                <View>
                 <Image
                     source={require("../assets/UI/dark-grid-background.jpg")}
                     style={[MapStyles.background, {
@@ -284,6 +297,7 @@ class Map extends React.Component{
                     }]}
                     resizeMode='repeat'
                 />
+                </View>
 
                 <View
                     style={{
@@ -335,8 +349,9 @@ class Map extends React.Component{
                 />
 
 
-
-                {this._displayAllCheers()}
+                <View>
+                    {this._displayAllCheers()}
+                </View>
                 
                 <Text style={MapStyles.position_text}>{Math.round(this.state.position[0]) + "   " + Math.round(this.state.position[1])}</Text>
 
@@ -388,7 +403,12 @@ class Map extends React.Component{
 
         BackHandler.addEventListener("hardwareBackPress", () => {
 
-            this.props.editor = false;
+            if(this.props.editor)
+                this.props.editor = false;
+            else {
+                this._backToHome(this.rootPosition[0], this.rootPosition[1]);
+
+            }
             return true;
 
         });

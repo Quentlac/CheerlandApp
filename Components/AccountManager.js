@@ -18,7 +18,7 @@ class AccountManager extends React.Component{
             name: "",
             firstname: "",
             nbCheers: 0,
-            certif: true
+            certif: false
         }
     }
 
@@ -28,7 +28,9 @@ class AccountManager extends React.Component{
                 username: result.data.username,
                 name: result.data.name,
                 firstname: result.data.firstname,
-                nbCheers: result.data.nbCheers
+                nbCheers: result.data.nbCheers,
+                certif: result.data.certif,
+                special_badge: result.data.special_badge
             });
         });
     }
@@ -47,7 +49,10 @@ class AccountManager extends React.Component{
         return (
             <View style={MainTheme.rootPage}>
                 <View style={AccountManagerStyle.user_info_box}>
-                    <Text style={AccountManagerStyle.username}>@{this.state.username} {this.state.certif ?  <Image style={{ width: 23, height: 23, resizeMode: "contain"}} source={require("../assets/UI/certif-icon.png")} /> : null }</Text>
+                    <Text style={AccountManagerStyle.username}>@{this.state.username}&nbsp; 
+                    {(this.state.certif == true) ?  <Image style={{ width: 23, height: 23, resizeMode: "contain"}} source={require("../assets/UI/certif-icon.png")} /> : null }
+                    {(this.state.special_badge == true) ?  <Image style={{ width: 23, height: 23, resizeMode: "contain"}} source={require("../assets/UI/special-badge.png")} /> : null }
+                    </Text>
 
                     <Text style={AccountManagerStyle.irl_name}>{this.state.firstname + " " + this.state.name}</Text>
                     <Text style={AccountManagerStyle.cheers_number}>{this.state.nbCheers}</Text>

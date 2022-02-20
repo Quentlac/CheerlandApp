@@ -2,7 +2,7 @@
   "expo": {
     "name": "Cheerland",
     "slug": "Cheerland",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -26,7 +26,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.devistorm.cheerland",
-      "versionCode": 14,
+      "versionCode": 15,
       "permissions": ["VIBRATE"],
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-3778298952636594~6047036665"

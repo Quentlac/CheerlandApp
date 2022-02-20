@@ -16,6 +16,7 @@ const AccountManagerStyle = StyleSheet.create({
     },
 
     user_info_box: {
+        flex: 0.25,
         backgroundColor: "#1c1c1c",
         margin: 10,
 
@@ -64,6 +65,20 @@ const AccountManagerStyle = StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 10,
         borderRadius: 10,
+    },
+
+    subText: {
+        color: "white",
+        textAlign: "center",
+        fontWeight: "bold",
+        fontVariant: ["small-caps"]
+    },
+
+    subInfos: {
+        marginTop: 30,
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-around"
     }
 
 

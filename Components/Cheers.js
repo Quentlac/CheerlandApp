@@ -18,6 +18,29 @@ class Cheers extends React.Component {
     }
 
 
+    _convertTime(time) {
+
+        if(time < 60) {
+            return Math.round(time) + " sec";
+        }
+
+        if(time < 3600) {
+            return Math.round(time / 60) + " min";
+        }
+
+        if(time < 86400) {
+            return Math.round(time / 3600) + " hr";
+        }
+        if(time < 604800) {
+            return Math.round(time / 86400) + " j";
+        }
+        else {
+            return Math.round(time / 604800) + " sem";
+        }
+
+    }
+
+
     render(){
         return(
             <Animated.View style={{
@@ -36,13 +59,18 @@ class Cheers extends React.Component {
 
                 <View style={CheerStyles.userinfos}>
                     {(this.props.type == "AD") ? <Text style={CheerStyles.ads_label}>Sponsorisé</Text> :
-                        <Text style={CheerStyles.username}>@{this.props.user.name}</Text>
+                        <TouchableOpacity onPress={() => alert(this.props.user.name)}>
+                            <Text style={CheerStyles.username}>@{this.props.user.name}</Text>
+                        </TouchableOpacity>
                     }
                     {(this.props.user.certif == true) ?
                     <Image style={CheerStyles.certif} source={require("../assets/UI/certif-icon.png")} /> : null}
 
+                    
                     {(this.props.user.certif == false && this.props.user.special_badge == true) ?
                     <Image style={CheerStyles.certif} source={require("../assets/UI/special-badge.png")} /> : null}
+
+                    <Text style={CheerStyles.time}>• {this._convertTime(this.props.time)}</Text>
 
                 </View>
 

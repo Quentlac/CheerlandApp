@@ -29,7 +29,7 @@ import * as Notifications from "expo-notifications";
 
 class Map extends React.Component{
 
-    _displayCheer(id, posX, posY, content, user, color, type){
+    _displayCheer(id, posX, posY, content, user, color, type, time){
 
 
         return (<Cheers
@@ -41,6 +41,7 @@ class Map extends React.Component{
                     content={content}
                     user={user}
                     color={color}
+                    time={time}
                     onPress={(e) => {
                         if(!this.cheer_move)
                             this._cheerClickHandler(e);
@@ -103,6 +104,7 @@ class Map extends React.Component{
                             type: cheer.type,
                             user: {name: cheer.username, certif: cheer.certif, special_badge: cheer.special_badge},
                             color: cheer.color,
+                            time: cheer.time,
                             path: cheer.path,
                             animated: anim
                         });
@@ -120,7 +122,7 @@ class Map extends React.Component{
 
         this.state.cheers_list.forEach((cheer) => {
             if(cheer.path == this.state.path || cheer.id == this.state.path)
-                cheers_view.push(this._displayCheer(cheer.id, cheer.posX, cheer.posY, cheer.content, cheer.user, cheer.color, cheer.type));
+                cheers_view.push(this._displayCheer(cheer.id, cheer.posX, cheer.posY, cheer.content, cheer.user, cheer.color, cheer.type, cheer.time));
 
         });
 
@@ -276,7 +278,7 @@ class Map extends React.Component{
             path_historic: [], // Historique des paths (pour remonter dans l'arborescence)
             cheers_list: [],
             displayEditor: false,
-            loading: false,
+            loading: true,
             notifications: false,
             notifs_data: null,
             zoom: 1
@@ -385,7 +387,7 @@ class Map extends React.Component{
 
         this.setState({position: [0, 0]});
 
-        AsyncStorage.getItem("posX").then((result) => {
+        /* AsyncStorage.getItem("posX").then((result) => {
             if(result != null)
                 this.setState({position: [Number.parseInt(result), this.state.position[1]]})
         })
@@ -398,7 +400,21 @@ class Map extends React.Component{
         })
         .catch((error) => {
             this.setState({position: [0, 0]})
-        });
+        }); */
+
+        getNextGoodCheer(this.props.worldname).then((result) => {
+            this.setState({loading: true, path: 'R', path_historic: []}, () =>
+            {
+                this.state.position =  [Math.round(result.data.posX), Math.round(result.data.posY)];
+                this._refreshAllCheers().then(() => {
+                    //alert(this.state.cheers_list.findIndex((item) => item.id == result.data.ID));
+                    setTimeout(() => {
+                        this._teleportToCheer(result.data.ID);
+                        this.setState({loading: false});
+                    }, 200);
+                }).catch((error) => alert(error + result.data.ID));
+            });
+        }).catch((error) => alert(error));
 
 
         BackHandler.addEventListener("hardwareBackPress", () => {

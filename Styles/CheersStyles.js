@@ -5,7 +5,7 @@ const CheersStyles = StyleSheet.create({
 
     root: {
         padding: 18,
-        maxWidth: 350,
+        maxWidth: 300,
 
         backgroundColor: "#424242",
         borderRadius: 20,
@@ -56,7 +56,19 @@ const CheersStyles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center"
-    }
+    },
+
+    banniereInfos: {
+        flex: 1,
+        justifyContent: "space-between",
+        flexDirection: "row"
+    },
+    
+    time: {
+        color: "rgba(255,255,255,0.38)",
+        marginRight: 20,
+        marginBottom: 3
+    },
 
 });
 

@@ -12,6 +12,7 @@ import Editor from "../Components/Editor";
 import {connect} from "react-redux";
 import NotificationsScreen from "../Components/NotificationsScreen";
 import {getNbNotifications} from "../CheerlandAPI/getter";
+import UserProfil from "../Components/UserProfil";
 
 
 const Tab = createBottomTabNavigator();
@@ -114,7 +115,7 @@ class TabNav extends React.Component {
                 })}
                 ></Tab.Screen>
 
-                <Tab.Screen name="Account" component={AccountManager} options={
+                <Tab.Screen name="Account" component={UserProfil} options={
                     {
                         headerShown: true,
                         title: "Compte",
